@@ -61,6 +61,10 @@ router.use((req, res, next) => {
   next();
 });
 
+/**
+ * async fall sem bætir gildum í info töfluna í gagnagrunninum okkar
+ * @param {*} note gildin object með gildum sem slegin voru inn í form-ið okkar
+ */
 async function addNote(note) {
   // Sækja dagsetninguna og klippa hana aðeins niður
   const today = new Date();
@@ -106,7 +110,7 @@ router.get('/logout', (req, res) => {
 router.post(
   '/',
 
-  // Hægt að nota .escape() hér aftast, en notum xss hér að neðan
+  // Hægt að nota .escape() hér aftast til að sanitize-a, en notum xss hér að neðan
   sanitize(['name', 'email', 'ssn', 'amount']).trim(),
   check('name').isLength({ min: 1 }).withMessage('Nafn má ekki vera tómt'),
   check('email').isLength({ min: 1 }).withMessage('Netfang má ekki vera tómt'),
@@ -133,11 +137,17 @@ router.post(
       return res.render('form', { errorMessages, data, title: 'Form' });
     }
 
+    /**
+     * Sækja lykla í data og map-a yfir þá
+     * þ.e. xss beitt á öll input sem við erum að fara setja í
+     * gagnagrunninn
+     */
     Object.keys(data).map((key) => {
       data[key] = xss(data[key]);
       return 0;
     });
 
+    // Búið að validate-a og sanitize-a, þá bæta í gagnagrunn og redirect
     await addNote(data);
     return res.redirect('/thanks');
   },
