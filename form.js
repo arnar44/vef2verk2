@@ -66,13 +66,9 @@ router.use((req, res, next) => {
  * @param {*} note gildin object með gildum sem slegin voru inn í form-ið okkar
  */
 async function addNote(note) {
-  // Sækja dagsetninguna og klippa hana aðeins niður
-  const today = new Date();
-  const str = today.toGMTString();
-
   await client.query(
-    'INSERT INTO info(date, name, email, ssn, amount) VALUES($1, $2, $3, $4, $5)',
-    [str, note.name, note.email, note.ssn, note.amount],
+    'INSERT INTO info(name, email, ssn, amount) VALUES($1, $2, $3, $4)',
+    [note.name, note.email, note.ssn, note.amount],
   );
 }
 
