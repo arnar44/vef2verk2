@@ -1,4 +1,38 @@
 extends layout
 
 block content
-  p Form!
+
+ div(class='parent')
+
+  if errorMessages
+    ul
+      each error in errorMessages
+        li= error
+
+  form(method="post" action="/")
+      div(class='line')
+          label Nafn  
+              input(type="text" name="name" autocomplete='off' value=data.name class=data.nameError )
+      div(class='line')
+          label Netfang
+              input(type="text" name="email" autocomplete='off' value=data.email class=data.emailError)
+      div(class='line')
+          label Kennitala
+              input(type="text" name="ssn" autocomplete='off' value=data.ssn class=data.ssnError)
+      div(class='line')
+          label Fjöldi
+              input(type="number" name="amount" autocomplete='off' value=data.amount class =data.amountError)
+      div(class='line')
+          button Senda
+
+block foot
+    footer
+        if data.user
+            div
+                p Innskráður notandi: #{data.user}
+            div
+                a(href='/logout') Útskráning
+            div
+                a(href='/admin') Stjórnsíða
+        else
+            a(href='/login') Innskráning

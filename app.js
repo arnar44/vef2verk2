@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const form = require('./form');
@@ -13,6 +12,14 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+const sessionSecret = 'leyndarmál';
+
+app.use(session({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+}));
+
 app.use('/', form);
 app.use('/admin', admin);
 
@@ -24,6 +31,9 @@ function errorHandler(err, req, res, next) { // eslint-disable-line
   console.error(err);
   res.status(500).render('error', { err });
 }
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 const hostname = '127.0.0.1';
 const port = 3000;

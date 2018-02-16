@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    form(method="post" action="/login")
+        div 
+            label Notendanafn:
+                input(type="text" name="username")
+        div
+            label Lykilorð:
+                input(type="password" name="password")
+        div
+            button Innskrá
+block foot
+    footer
+        a(href='/') Forsíða

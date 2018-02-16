@@ -19,3 +19,107 @@ body {
   background-color: #eee;
   color: #333;
 }
+
+main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.error{
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 0.5px solid rgba(255, 0, 0, 0.3);
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
+    border-top: 2px solid black;
+    padding-top: 15px;
+    padding-left: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+ul{
+  font-size: 0.8rem;
+}
+
+li{
+  margin-bottom: 10px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+
+.line{
+  margin-bottom: 5px;
+}
+
+input{
+  float: right;
+  height: 1.5rem;
+  border:1px solid #cccccc;
+}
+
+label{
+  padding-right: 10px;
+}
+
+button{
+  width: 60px;
+  height: 30px;
+  margin-top:15px;
+  font-weight: bold;
+}
+
+
+a {
+  color: black;
+}
+
+footer div {
+  margin-bottom: 10px;
+}
+
+.admin{
+  display: flex;
+  flex-direction: column;
+}
+
+.adminButton{
+  margin-top: 10px;
+  color: black;
+  align-self: baseline;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th {
+  background-color: #b3b3b3;
+  padding: 5px;
+}
+
+td{
+  padding: 5px;
+}
+

@@ -1,5 +1,15 @@
-p Villa
+doctype
+html(lang="is")
+  head
+    meta(charset="utf-8")
+    title=title
 
-if err && err.message
-  p=err.message
-  pre #{err.stack}
+block content
+  p Villa
+
+  if title && title === '404'
+    p 404 villa, síða fannst ekki
+
+  if err && err.message
+    p=err.message
+    pre #{err.stack}

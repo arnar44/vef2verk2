@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  div(class='admin')
+    if notes
+        table
+            tr
+                th Id
+                th Dagsetning
+                th Nafn
+                th Netfang
+                th Kennitala
+                th Fjöldi
+            each note in notes
+                tr 
+                    td= note.id
+                    td= note.date
+                    td= note.name
+                    td= note.email
+                    td= note.ssn
+                    td= note.amount
+        a(href='/admin/download' class='adminButton') Sækja
+
+block foot
+    footer
+        a(href='/') Forsíða

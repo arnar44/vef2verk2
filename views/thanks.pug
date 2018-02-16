@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    p Takk fyrir skráningu
+    a(href="/") Aftur á forsíðu
+block foot
+    footer
+        if data && data.user
+            div
+                p Innskráður notandi: #{data.user}
+            div
+                a(href='/logout') Útskráning
+            div
+                a(href='/admin') Stjórnsíða
+        else
+            a(href='/login') Innskráning
+        
