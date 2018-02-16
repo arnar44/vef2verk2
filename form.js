@@ -144,7 +144,12 @@ router.post(
     });
 
     // Búið að validate-a og sanitize-a, þá bæta í gagnagrunn og redirect
-    await addNote(data);
+    try {
+      await addNote(data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).render('error', { err });
+    }
     return res.redirect('/thanks');
   },
 );

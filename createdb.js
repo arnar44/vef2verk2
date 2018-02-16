@@ -12,12 +12,12 @@ async function create() {
 
   const client = new Client({ connectionString });
   await client.connect();
-  const result = await client.query(data.toString('utf-8'));
+  await client.query(data.toString('utf-8'));
   await client.end();
 
   console.info('Schema created');
 }
 
 create().catch((err) => {
-  console.log(err);
+  console.error(err);
 });
