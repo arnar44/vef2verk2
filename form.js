@@ -21,6 +21,13 @@ process.env.DATABASE_URL || 'postgres://arnar:12345@localhost/v2';
 const client = new Client({ connectionString });
 client.connect();
 
+// köllum á async-middleware með þessu falli svo við getum gripið villur ef þæ koma upp
+function catchErrors(fn) {
+  return function (req, res, next) { // eslint-disable-line
+    return fn(req, res, next).catch(next);
+  };
+}
+
 function strat(username, password, done) {
   users
     .findByUsername(username)
@@ -90,7 +97,7 @@ router.get('/thanks', (req, res) => {
   res.render('thanks', { data, title: 'Takk fyrir' });
 });
 
-router.get('/login', async (req, res) => {
+router.get('/login', (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect('/admin');
   }
@@ -115,7 +122,7 @@ router.post(
   check('ssn').matches(/^[0-9]{6}-?[0-9]{4}$/).withMessage('Kennitala verður að vera á formi 000000-0000'),
   check('amount').matches(/^\+?([1-9]\d*)$/).withMessage('Fjöldi verður að vera tala, stærri en 0'),
 
-  async (req, res) => {
+  catchErrors(async (req, res) => {
     const errors = validationResult(req);
     const data = req.body;
 
@@ -151,7 +158,7 @@ router.post(
       res.status(500).render('error', { err });
     }
     return res.redirect('/thanks');
-  },
+  }),
 );
 
 router.post(

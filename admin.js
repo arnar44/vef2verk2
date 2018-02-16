@@ -11,6 +11,13 @@ const connectionString =
 
 const router = express.Router();
 
+// köllum á async-middleware með þessu falli svo við getum gripið villur ef þæ koma upp
+function catchErrors(fn) {
+  return function (req, res, next) { // eslint-disable-line
+    return fn(req, res, next).catch(next);
+  };
+}
+
 /*
   Búa til tengingu við gagnagrunn
   Þarf bara að búa til eina því það er bara einn notandi
@@ -32,12 +39,12 @@ function ensureLoggedIn(req, res, next) {
   return res.redirect('/login');
 }
 
-router.get('/', ensureLoggedIn, async (req, res) => {
+router.get('/', ensureLoggedIn, catchErrors(async (req, res) => {
   const notes = await fetchNotes();
   return res.render('admin', { notes, title: 'Stjórnsíða' });
-});
+}));
 
-router.get('/download', ensureLoggedIn, async (req, res) => {
+router.get('/download', ensureLoggedIn, catchErrors(async (req, res) => {
   // Sækja töfluna
   const notes = await fetchNotes();
   // Breyta töflu í csv með json2csv
@@ -46,6 +53,6 @@ router.get('/download', ensureLoggedIn, async (req, res) => {
   const filename = 'download.csv';
   res.set('Content-Disposition', `attachment; filename="${filename}"`);
   res.send(csv);
-});
+}));
 
 module.exports = router;
